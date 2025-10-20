@@ -1,0 +1,7 @@
+build/
+*.userdb/
+sync/
+trash/
+*.userdb.txt
+.place_holder
+*.bin

@@ -1,0 +1,5 @@
+patch:
+  engine/filters/+:
+    - lua_filter@*aux_code@ZRM_Aux-code_4.3
+    # 或下面的小鹤形码方案
+    # - lua_filter@*aux_code@flypy_full

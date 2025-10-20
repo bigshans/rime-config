@@ -1,0 +1,160 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: zrm_pinyin
+  name: 自然码+辅助码
+  version: "0.15"
+  author:
+    - aerian
+  description: |
+    自然码+辅助码方案。
+  dependencies:
+    - radical_pinyin
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, 西文 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: simplification
+    states: [ 漢字, 汉字 ]
+  - name: ascii_punct
+    states: [ 。，, ．， ]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    # - lua_segmentor@english_segmentor
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - reverse_lookup_translator
+    # - lua_translator@english_translator
+    - lua_translator@date_translator
+    - lua_translator@time_translator
+    - lua_translator@week_translator
+    - table_translator@custom_phrase
+    # - table_translator@english
+    - lua_translator@english_limit
+    - script_translator
+  filters:
+    # - lua_filter@balance_candidate_filter
+    - simplifier
+    # - lua_filter@charset_filter
+    - lua_filter@w2c_filter
+    - uniquifier
+    - lua_filter@drop_duplicate_filter
+    - lua_filter@secondary_code_filter
+
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false 
+  enable_sentence: false 
+  initial_quality: 10
+
+speller:
+  alphabet: "zyxwvutsrqponmlkjihgfedcba;ZYXWVUTSRQPONMLKJIHGFEDCBA|"
+  delimiter: " '"
+  finals: '|'
+  algebra:
+    - derive/^(\w*);(\w)(\w*)$/$1;$2/
+    - derive/^(\w*);(\w*)$/$1/
+    - derive/^([a-zA-Z].+);/\U$1/
+    - derive/^([a-zA-Z].+)/\U$1/
+
+translator:
+  # dictionary: zrm_pinyin
+  prism: zrm_pinyin
+  spelling_hints: 1
+  enable_encoder: true
+  enable_user_dict: true
+  enable_sentence: false
+  enable_commit_history: true
+  initial_quality: 1
+  preedit_format:
+    - xform/(?<!;)([bpmnljqxy])n/$1in/
+    - xform/(?<!;)([bcdfghklmprstviu])g/$1eng/
+    - xform/(?<!;)([bdlmnq])q/$1iu/
+    - xform/(?<!;)([gkhvuirzcrs])w/$1ua/
+    - xform/(?<!;)([dljqx])w/$1ia/
+    - xform/(?<!;)([dtnlgkhjqxyvuirzcrs])r/$1uan/
+    - xform/(?<!;)([nljqxy])t/$1ve/
+    - xform/(?<!;)([gkhvuirzcrs])y/$1uai/
+    - xform/(?<!;)([bpmdtnljqxy])y/$1ing/
+    - xform/(?<!;)([dtnlgkhvuirzcrs])o/$1uo/
+    - xform/(?<!;)([dtnlgkhviurzcs])p/$1un/
+    - xform/(?<!;)([jqx])s/$1iong/
+    - xform/(?<!;)([dtnlgkhvirzcsy])s/$1ong/
+    - xform/(?<!;)([bjqxnl])d/$1iang/
+    - xform/(?<!;)([gkhivu])d/$1uang/
+    - xform/(?<!;)([bpmfdngkhvifurzcs])f/$1en/
+    - xform/(?<!;)([bpmfdtnlgkhviuzciywr])h/$1ang/
+    - xform/(?<!;)([bpmfdtnlgkhviuzciywr])j/$1an/
+    - xform/(?<!;)([bpmdtnlgkhviuzciyr])k/$1ao/
+    - xform/(?<!;)([bpmdtnlgkhviuzcir])l/$1ai/
+    - xform/(?<!;)([bpmfdnlgkhiuzw])z/$1ei/
+    - xform/(?<!;)([bpmdtnljqx])x/$1ie/
+    - xform/(?<!;)([bpmfdtnljqx])c/$1iao/
+    - xform/(?<!;)([dtgkhvuirzcrs])v/$1ui/
+    - xform/(?<!;)([pmfdtnlgkhviurzcsy])b/$1ou/
+    - xform/(?<!;)([bpmdtnljqx])m/$1ian/
+    - xform/(?<!;)([aoe])\1(\w)/$1$2/
+    - "xform/(?<!;)(^|[ '])v/$1zh/"
+    - "xform/(?<!;)(^|[ '])i/$1ch/"
+    - "xform/(?<!;)(^|[ '])u/$1sh/"
+    - xform/(?<!;)([jqxy])v/$1u/
+    - xform/(?<!;)([nl])v/$1ü/
+    - xform/(?<!;>)ah/ang/
+    - xform/(?<!;>)eh/eng/
+
+reverse_lookup:
+    dictionary: radical_pinyin
+    enable_completion: true
+    prefix: "`"
+    tips: 〔拆〕
+
+# reverse_lookup:
+#   dictionary: zrm_pinyin
+#   enable_completion: true
+#   prefix: "`"
+#   suffix: "'"
+#   tips: 〔筆畫〕
+#   preedit_format:
+#     - xlit/hspnz/一丨丿丶乙/
+#   comment_format:
+#     - xform/([nl])v/$1ü/
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "`[a-z]*'?$"
+
+english:  # english翻译器的设定项
+  limit: 3
+  dictionary: english.ig
+  spelling_hints: 3
+  enable_completion: true  # 是否启用英文输入联想补全
+  enable_sentence: false 
+  initial_quality: -1  # 调整英文候选词的位置 -1 0 1
