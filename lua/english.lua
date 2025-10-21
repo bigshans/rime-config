@@ -51,7 +51,7 @@ end
 
 function T2.func(inp, seg, env)
     local str = string.gsub(inp, ";", "")
-    local english_res = env.english:query(str, seg)
+    local english_res = env.english:query(str:lower(), seg)
     local limit = env.limit_cnt
     if english_res ~= nil then
         if limit == -1 then
