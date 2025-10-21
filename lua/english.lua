@@ -9,14 +9,6 @@ local F = {}
 local English="english"
 local dict_bin = "/home/aerian/.local/share/fcitx5/rime/lua/fastdict/dict.bin"
 
--- | Check if @s is an English word.
---
--- @param s str
--- @return true if it can be considered an English word
-local function str_is_english_word(s)
-   return s:find(PAT_ENGLISH_WORD) ~= nil
-end
-
 function S.func(segs, env)
     local extDb = db.openFastDict(dict_bin)
 
@@ -58,12 +50,15 @@ function T2.init(env)
 end
 
 function T2.func(inp, seg, env)
-    local english_res = env.english:query(inp, seg)
+    local str = string.gsub(inp, ";", "")
+    local english_res = env.english:query(str, seg)
     local limit = env.limit_cnt
     if english_res ~= nil then
         if limit == -1 then
             for cand in english_res:iter() do
                 cand.comment = '[english]'
+                cand._start = seg.start
+                cand._end = seg._end
                 yield(cand)
             end
         else
@@ -72,6 +67,8 @@ function T2.func(inp, seg, env)
                 if cnt > limit then
                     break
                 end
+                cand._start = seg.start
+                cand._end = seg._end
                 cand.comment = '[english]'
                 yield(cand)
                 cnt = cnt + 1
