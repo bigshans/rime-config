@@ -5,3 +5,4 @@ trash/
 *.userdb.txt
 .place_holder
 *.bin
+user.yaml
