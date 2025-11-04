@@ -88,33 +88,34 @@ translator:
   enable_commit_history: true
   initial_quality: 1
   preedit_format:
-    - xform/(?<!;)([bpmnljqxy])n/$1in/
-    - xform/(?<!;)([bcdfghklmprstviu])g/$1eng/
-    - xform/(?<!;)([bdlmnq])q/$1iu/
-    - xform/(?<!;)([gkhvuirzcrs])w/$1ua/
-    - xform/(?<!;)([dljqx])w/$1ia/
-    - xform/(?<!;)([dtnlgkhjqxyvuirzcrs])r/$1uan/
-    - xform/(?<!;)([nljqxy])t/$1ve/
-    - xform/(?<!;)([gkhvuirzcrs])y/$1uai/
-    - xform/(?<!;)([bpmdtnljqxy])y/$1ing/
-    - xform/(?<!;)([dtnlgkhvuirzcrs])o/$1uo/
-    - xform/(?<!;)([dtnlgkhviurzcs])p/$1un/
-    - xform/(?<!;)([jqx])s/$1iong/
-    - xform/(?<!;)([dtnlgkhvirzcsy])s/$1ong/
-    - xform/(?<!;)([bjqxnl])d/$1iang/
-    - xform/(?<!;)([gkhivu])d/$1uang/
-    - xform/(?<!;)([bpmfdngkhvifurzcs])f/$1en/
-    - xform/(?<!;)([bpmfdtnlgkhviuzciywr])h/$1ang/
-    - xform/(?<!;)([bpmfdtnlgkhviuzciywr])j/$1an/
-    - xform/(?<!;)([bpmdtnlgkhviuzciyr])k/$1ao/
-    - xform/(?<!;)([bpmdtnlgkhviuzcir])l/$1ai/
-    - xform/(?<!;)([bpmfdnlgkhiuzw])z/$1ei/
-    - xform/(?<!;)([bpmdtnljqx])x/$1ie/
-    - xform/(?<!;)([bpmfdtnljqx])c/$1iao/
-    - xform/(?<!;)([dtgkhvuirzcrs])v/$1ui/
-    - xform/(?<!;)([pmfdtnlgkhviurzcsy])b/$1ou/
-    - xform/(?<!;)([bpmdtnljqx])m/$1ian/
-    - xform/(?<!;)([aoe])\1(\w)/$1$2/
+    - xform/(?<!;)([bcidghklmnpsutwyzv])l/$1ai
+    - xform/(?<!;)([icdghklnrustvz])o/$1uo
+    - xform/(?<!;)([jk])o/$1io
+    - xform/(?<!;)([bcidfghklmnprsutwzv])g/$1eng
+    - xform/(?<!;)([bcidfghklmnprsutwyzv])h/$1ang
+    - xform/(?<!;)([bcidfghklmnprsutwyzv])j/$1an
+    - xform/(?<!;)([bcidghklmnprsutyzv])k/$1ao
+    - xform/(?<!;)([bdfghklmnptwz])z/$1ei
+    - xform/(?<!;)([bcidfghkmnprsuwzv])f/$1en
+    - xform/(?<!;)([bjlnqxm])d/$1iang
+    - xform/(?<!;)([bdjlmnpqtx])m/$1ian
+    - xform/(?<!;)([gbdjlmnpqtx])c/$1iao
+    - xform/(?<!;)([bdjlmnpqtx])x/$1ie
+    - xform/(?<!;)([bjlmnpqxy])n/$1in
+    - xform/(?<!;)([bdjlmnpqtxy])y/$1ing
+    - xform/(?<!;)([icdghklnrstyvz])s/$1ong
+    - xform/(?<!;)([icdfghklmnprustyvz])b/$1ou
+    - xform/(?<!;)([j])b/$1iou
+    - xform/(?<!;)([ighkuvs])y/$1uai
+    - xform/(?<!;)([ighkuvmrw])w/$1ua
+    - xform/(?<!;)([icdghjklnqrustxyvz])r/$1uan
+    - xform/(?<!;)([dighkuv])d/$1uang
+    - xform/(?<!;)([icdghkrustvz])v/$1ui
+    - xform/(?<!;)([icdghjklnqrustxyvz])p/$1un
+    - xform/(?<!;)([djhlqxmp])w/$1ia
+    - xform/(?<!;)([bdjlmnqxk])q/$1iu
+    - xform/(?<!;)([jqxk])s/$1iong
+    - xform/(?<!;)([jlnqxy])t/$1ue
     - "xform/(?<!;)(^|[ '])v/$1zh/"
     - "xform/(?<!;)(^|[ '])i/$1ch/"
     - "xform/(?<!;)(^|[ '])u/$1sh/"
@@ -122,6 +123,7 @@ translator:
     - xform/(?<!;)([nl])v/$1ü/
     - xform/(?<!;>)ah/ang/
     - xform/(?<!;>)eh/eng/
+
 
 reverse_lookup:
     dictionary: radical_pinyin
