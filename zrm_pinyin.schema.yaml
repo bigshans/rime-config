@@ -43,19 +43,19 @@ engine:
   translators:
     - punct_translator
     - reverse_lookup_translator
-    # - lua_translator@english_translator
+    - lua_translator@english_translator
     - lua_translator@date_translator
     - lua_translator@time_translator
     - lua_translator@week_translator
-    - table_translator@custom_phrase
-    # - table_translator@english
+    # - table_translator@custom_phrase
+    - table_translator@english
     - lua_translator@english_limit
     - script_translator
   filters:
     # - lua_filter@balance_candidate_filter
     - simplifier
     # - lua_filter@charset_filter
-    - lua_filter@w2c_filter
+    # - lua_filter@w2c_filter
     - uniquifier
     - lua_filter@drop_duplicate_filter
     - lua_filter@secondary_code_filter

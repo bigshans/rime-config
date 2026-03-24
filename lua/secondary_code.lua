@@ -1,4 +1,4 @@
-local db = require('db')
+local db = require('./db')
 
 -- 自然码辅码保留
 
@@ -19,11 +19,13 @@ function SecondaryFilter.init(env)
     local engine = env.engine
     local config = engine.schema.config
 
-    env.schema_name = config:get_string('schema/schema_id')
+    -- 获取方案关联的词库名，如果没定义则回退到 schema_id
+    local dict_name = config:get_string('translator/dictionary') or config:get_string('schema/schema_id')
+    env.dict_name = dict_name
 end
 
 local function reverseLookup(env, word)
-    local code_str = db.openLookup(env.schema_name):lookup(word)
+    local code_str = db.openLookup("zrm_pinyin.extended"):lookup(word)
     if not code_str or code_str == '' then
         return nil
     end
@@ -122,11 +124,13 @@ function SecondaryFilter.func(input, env)
         if cand:get_dynamic_type() == 'Shadow' then
             local shadowText = cand.text
             local originalCand = cand:get_genuine()
-            cand = ShadowCandidate(originalCand, originalCand.type, shadowText, codeComment)
+            -- 直接 yield 新对象，不要赋值给 cand
+            yield(ShadowCandidate(originalCand, originalCand.type, shadowText, codeComment))
         else
+            -- 3. 直接修改现有 Candidate 的 comment 属性
             cand.comment = codeComment
+            yield(cand)
         end
-        yield(cand)
         ::continue::
     end
 end
